@@ -1,16 +1,25 @@
-# pdfmaker
 
-A new Flutter project.
+# Image to PDFMaker app using Flutter and Dart
 
-## Getting Started
+## Hii 🙋‍♂️ there i am Shourya this is my Flutter Project through which i had learnt file management using flutter libraries
 
-This project is a starting point for a Flutter application.
+This is a android app created using flutter for make easof making PDFS from scanning images 
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+## Features
+
+- ✅ AutoCrop Scanned Images
+- ✅ Auto delete 30 days old files app specific folder
+- ✅ Able to save in downloads folder
+- ✅ Able to share directly from app itself
+
+
+## Installation
+
+Install my-project Using flutter
+    git clone https://github.com/Sho-urya25/PDFMaker
+## Use Myapp
+
+Relase: https://github.com/Sho-urya25/PDFMaker/releases/download/FirstRelease/app-release.apk
