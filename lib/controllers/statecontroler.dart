@@ -11,6 +11,7 @@ import 'package:open_settings_plus/core/open_settings_plus.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:pdf/widgets.dart' as pw;
+// ignore: unused_import
 import 'package:pdfmaker/controllers/statecontroler.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -26,15 +27,17 @@ class StateController extends GetxController {
 
   static const String _pdfFolderName = 'PDFs';
 
+//! getting apps directory
   Future<String> getAppDirectory() async {
     Directory? directory = await getApplicationDocumentsDirectory();
-    final pdfDir = Directory(p.join(directory!.path, _pdfFolderName));
+    final pdfDir = Directory(p.join(directory.path, _pdfFolderName));
     if (!await pdfDir.exists()) {
       await pdfDir.create(recursive: true);
     }
     return pdfDir.path;
   }
 
+//! check for android permission
   Future<bool> checkAndroidVersionAndPermission() async {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     final deviceInfo = await deviceInfoPlugin.androidInfo;
@@ -47,6 +50,7 @@ class StateController extends GetxController {
     }
   }
 
+//! check for android download directory permission
   Future<bool> requestDownloadDirectoryPermission() async {
     final permissionStatus = await Permission.storage.status;
     if (permissionStatus.isGranted) {
@@ -64,7 +68,7 @@ class StateController extends GetxController {
             onPressed: () {
               setting.internalStorage();
             },
-            child: Text('Open Settings'),
+            child: const Text('Open Settings'),
           ),
         );
         return false;
@@ -73,6 +77,7 @@ class StateController extends GetxController {
     return false;
   }
 
+//! requesting external storage permission
   Future<bool> requestManageExternalStoragePermission() async {
     final permissionStatus = await Permission.manageExternalStorage.status;
     if (permissionStatus.isGranted) {
@@ -91,7 +96,7 @@ class StateController extends GetxController {
             onPressed: () {
               setting.internalStorage();
             },
-            child: Text('Open Settings'),
+            child: const Text('Open Settings'),
           ),
         );
         return false;
@@ -100,8 +105,10 @@ class StateController extends GetxController {
     return false;
   }
 
-  void newPdfCreation() {
-    creatNewPdf().then((pdfData) {
+//! create  pdf function
+  void newPdfCreation(List<String> pictures) {
+
+    creatNewPdf(pictures).then((pdfData) {
       getAppDirectory().then((path) {
         Get.defaultDialog(
           title: "Give Pdf Name",
@@ -116,7 +123,7 @@ class StateController extends GetxController {
           ),
         ).then((_) {
           final filename = filenameController.text.isEmpty
-              ? Uuid().v4()
+              ? const Uuid().v4()
               : filenameController.text;
           File('$path/$filename.pdf')
               .writeAsBytes(pdfData, flush: true)
@@ -130,11 +137,17 @@ class StateController extends GetxController {
     });
   }
 
-  Future<Uint8List> creatNewPdf() async {
+//! getting of list of camera images
+  Future<List<String>> getImages() async {
     List<String> pictures = await CunningDocumentScanner.getPictures() ?? [];
     if (pictures.isEmpty) {
       throw Exception('No pictures were scanned');
     }
+    return pictures;
+  }
+
+//! create new pdf file
+  Future<Uint8List> creatNewPdf(List<String> pictures) async {
     pdf = pw.Document();
 
     for (var file in pictures) {
@@ -242,8 +255,9 @@ class StateController extends GetxController {
   }
 
   Future<void> _saveFile(File file, Directory pdfDir) async {
-    String filename =
-        filenameController.text.isEmpty ? Uuid().v4() : filenameController.text;
+    String filename = filenameController.text.isEmpty
+        ? const Uuid().v4()
+        : filenameController.text;
     if (filenameController.text.isEmpty) {
       await Get.defaultDialog(
         title: "Give PDF Name",
@@ -256,7 +270,7 @@ class StateController extends GetxController {
         ),
       );
       filename = filenameController.text.isEmpty
-          ? Uuid().v4()
+          ? const Uuid().v4()
           : filenameController.text;
     }
     try {

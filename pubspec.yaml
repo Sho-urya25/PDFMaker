@@ -48,6 +48,9 @@ dependencies:
   open_settings_plus: ^0.3.3
   device_info_plus: ^10.1.2
   fluttertoast: ^8.2.8
+  image_picker: ^1.1.2
+  image_cropper: ^8.0.2
+  easy_pdf_viewer: ^1.0.8
 
 dev_dependencies:
   flutter_lints: ^4.0.0

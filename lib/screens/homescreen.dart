@@ -1,6 +1,8 @@
 import 'dart:io';
 
+import 'package:easy_pdf_viewer/easy_pdf_viewer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:pdfmaker/controllers/statecontroler.dart';
@@ -47,15 +49,35 @@ class HomeScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          stateController.newPdfCreation();
+          Get.defaultDialog(
+              title: "Create ur pdf",
+              middleText: "Select galary or camera",
+              actions: [
+                IconButton.filled(
+                    onPressed: () {
+                      _pdfController.pickeImage();
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.image_outlined)),
+                IconButton.filled(
+                    onPressed: () {
+                      Get.back();
+                      stateController.getImages().then((images) {
+                        stateController.newPdfCreation(images);
+                      });
+                    },
+                    icon: const Icon(Icons.add_a_photo_outlined))
+              ]);
+          //
         },
-        child: const Icon(Icons.add_a_photo_outlined),
+        child: const Icon(Icons.add),
       ),
       body: Obx(() {
         if (_pdfController.pdfFiles.isEmpty) {
           return const Center(
               child: Text("No pdf files are there Please createone to see"));
         } else {
+          
           return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, mainAxisSpacing: 2),
@@ -143,4 +165,5 @@ class HomeScreen extends StatelessWidget {
       }),
     );
   }
+
 }
