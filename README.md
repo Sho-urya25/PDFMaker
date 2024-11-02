@@ -14,7 +14,9 @@ This is a android app created using flutter for make easof making PDFS from scan
 - ✅ Auto delete 30 days old files app specific folder
 - ✅ Able to save in downloads folder
 - ✅ Able to share directly from app itself
-
+## Updated
+- ✅ Able to load images from galery and able to crop it
+- ✅ Able to make pdf from gallery images
 
 ## Installation
 
